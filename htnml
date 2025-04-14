@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chaos Mode</title>
+  <style>
+    body {
+      font-family: monospace;
+      text-align: center;
+      padding-top: 100px;
+    }
+    a {
+      display: inline-block;
+      font-size: 24px;
+      padding: 12px 20px;
+      background: #ff0000;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #ff0000aa;
+    }
+    a:hover {
+      background: #cc0000;
+    }
+  </style>
+</head>
+<body>
+  <a href="#" onclick="(function(){
+    const chaosAudio = new Audio('https://jukehost.co.uk/music/yourfile.mp3');
+    chaosAudio.loop = true;
+    chaosAudio.volume = 1.0;
+    chaosAudio.play();
+
+    function displayRandomImage() {
+      const images = [
+        'https://media4.giphy.com/media/B4dt6rXq6nABilHTYM/200w.gif',
+        'https://media.tenor.com/fFntTHJYFPMAAAAM/random.gif',
+        'https://media.tenor.com/O1kfNjm2rCkAAAAM/qiwimedia-mike-wazowski.gif'
+      ];
+      const img = new Image();
+      img.src = images[Math.floor(Math.random() * images.length)];
+      img.style.position = 'absolute';
+      img.style.top = `${Math.random() * 90}%`;
+      img.style.left = `${Math.random() * 90}%`;
+      img.style.width = '150px';
+      img.style.height = '150px';
+      img.style.zIndex = 9999;
+      document.body.appendChild(img);
+      setTimeout(() => {
+        document.body.removeChild(img);
+      }, 300);
+    }
+
+    function shakeScreen() {
+      const body = document.body;
+      const shakeAmount = 15;
+      let count = 0;
+      const interval = setInterval(() => {
+        body.style.position = 'relative';
+        body.style.top = `${Math.random() * shakeAmount - shakeAmount / 2}px`;
+        body.style.left = `${Math.random() * shakeAmount - shakeAmount / 2}px`;
+        count++;
+        if (count > 5) {
+          clearInterval(interval);
+          body.style.top = '0px';
+          body.style.left = '0px';
+        }
+      }, 20);
+    }
+
+    function spinScreen() {
+      const body = document.body;
+      const spinAmount = Math.random() * 360;
+      body.style.transition = 'transform 0.25s linear';
+      body.style.transform = `rotate(${spinAmount}deg)`;
+      setTimeout(() => {
+        body.style.transform = `rotate(0deg)`;
+      }, 250);
+    }
+
+    function flashScreen() {
+      const body = document.body;
+      const flashColor = `rgb(${Math.random()*256}, ${Math.random()*256}, ${Math.random()*256})`;
+      const original = body.style.backgroundColor;
+      body.style.transition = 'background-color 0.05s';
+      body.style.backgroundColor = flashColor;
+      setTimeout(() => {
+        body.style.backgroundColor = original || '';
+      }, 50);
+    }
+
+    function createChaos() {
+      displayRandomImage();
+      shakeScreen();
+      spinScreen();
+      flashScreen();
+      setTimeout(createChaos, 100);
+    }
+
+    createChaos();
+  })()">☣️ Launch Chaos</a>
+</body>
+</html>
